@@ -4,6 +4,11 @@
 
 <p *ngIf="hideTable"><em>Loading...</em></p>
 
+<mat-form-field [hidden]="hideTable">
+  <mat-label>Filter by name (or part of it)...</mat-label>
+  <input matInput (keyup)="loadData($event.target)">
+</mat-form-field>
+
 <table mat-table [dataSource]="cities" class="table-striped mat-elevation-z8" [hidden]="hideTable"
   matSort (matSortChange)="loadData()"
   [matSortActive]="defaultSortColumn"

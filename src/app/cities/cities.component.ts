@@ -23,6 +23,9 @@ export class CitiesComponent implements OnInit {
   defaultSortColumn = 'name' as const;
   defaultSortOrder: SortDirection = 'asc' as const;
 
+  defaultFilterColumn = 'name' as const;
+  filterQuery: string | null = null;
+
   constructor(
     private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string
@@ -32,20 +35,31 @@ export class CitiesComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() {
-    var pageEvent = new PageEvent();
+  loadData(target: EventTarget | null = null) {
+    const pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
+    if(target) {
+      const query = (target as HTMLInputElement).value;
+      this.filterQuery = query;
+    }
     this.getData(pageEvent);
   }
 
   getData(event: PageEvent) {
-    var url = this.baseUrl + 'api/Cities';
-    var params = new HttpParams()
+    const url = this.baseUrl + 'api/Cities';
+    let params = new HttpParams()
       .set('pageIndex', event.pageIndex.toString())
       .set('pageSize', event.pageSize.toString())
       .set('sortColumn', this.sort ? this.sort.active : this.defaultSortColumn)
       .set('sortOrder', this.sort ? this.sort.direction : this.defaultSortOrder);
+
+    if(this.filterQuery) {
+      params = params
+        .set('filterColumn', this.defaultFilterColumn)
+        .set('filterQuery', this.filterQuery);
+    }
+
     this.http.get<any>(url, {params})
       .subscribe({
         next: (result: any) => {
