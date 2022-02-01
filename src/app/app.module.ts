@@ -14,6 +14,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { CountriesComponent } from './countries/countries.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CityEditComponent } from './city-edit/city-edit.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { CountriesComponent } from './countries/countries.component';
     NavMenuComponent,
     HomeComponent,
     CitiesComponent,
-    CountriesComponent
+    CountriesComponent,
+    CityEditComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,9 @@ import { CountriesComponent } from './countries/countries.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
