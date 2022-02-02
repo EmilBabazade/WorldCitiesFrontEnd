@@ -17,6 +17,7 @@ import { CountriesComponent } from './countries/countries.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CityEditComponent } from './city-edit/city-edit.component';
 import { MatSelectModule } from '@angular/material/select';
+import { CountryEditComponent } from './country-edit/country-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
     HomeComponent,
     CitiesComponent,
     CountriesComponent,
-    CityEditComponent
+    CityEditComponent,
+    CountryEditComponent,
   ],
   imports: [
     BrowserModule,
