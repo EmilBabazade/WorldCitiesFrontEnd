@@ -15,7 +15,7 @@ import { query } from "@angular/animations";
   styleUrls: ["./cities.component.css"]
 })
 export class CitiesComponent implements OnInit {
-  public displayedColumns: string[] = ["id", "name", "lat", "lon"];
+  public displayedColumns: string[] = ["id", "name", "lat", "lon", "countryName"];
   cities: MatTableDataSource<City> = new MatTableDataSource();
   hideTable = true;
 
