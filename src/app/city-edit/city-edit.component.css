@@ -8,6 +8,7 @@ input.ng-invalid.ng-touched {
 }
 
 input.ng-valid ~ .valid-feedback,
-input.ng-invalid ~ .invalid-feedback {
+input.ng-invalid ~ .invalid-feedback,
+.mat-form-field ~ .invalid-feedback {
   display: block;
 }

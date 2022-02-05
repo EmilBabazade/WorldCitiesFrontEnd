@@ -4,6 +4,7 @@ import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators }
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { BaseFormComponent } from "../base.form.component";
 import { Country } from "../countries/Country";
 
 @Component({
@@ -11,7 +12,7 @@ import { Country } from "../countries/Country";
   templateUrl: "./country-edit.component.html",
   styleUrls: ["./country-edit.component.css"]
 })
-export class CountryEditComponent implements OnInit {
+export class CountryEditComponent extends BaseFormComponent implements OnInit {
   // the view title
   title = "";
 
@@ -33,6 +34,7 @@ export class CountryEditComponent implements OnInit {
     private http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
   ) {
+    super();
     this.loadData();
   }
 

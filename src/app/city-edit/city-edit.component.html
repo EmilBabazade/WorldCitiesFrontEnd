@@ -1,4 +1,4 @@
-<div class="city-edit">
+<div class="city-edit" (click)="onChange()">
   <h1>{{title}}</h1>
 
   <p *ngIf="this.id && !city"><em>Loading...</em></p>
@@ -16,9 +16,9 @@
         formControlName="name" required
         placeholder="City name..."
         class="form-control" />
-      <div *ngIf="form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)"
-        class="invalid-feedback">
-        <div *ngIf="form.get('name')?.errors?.required">
+      <div *ngIf="hasError('name')"
+           class="invalid-feedback">
+        <div *ngIf="getControl('name')?.errors?.required">
           Name is required.
         </div>
       </div>
@@ -31,9 +31,9 @@
         placeholder="Latitude..."
         class="form-control" />
 
-        <div *ngIf="form.get('lat')?.invalid && (form.get('lat')?.dirty || form.get('lat')?.touched)"
+        <div *ngIf="hasError('lat')"
           class="invalid-feedback">
-          <div *ngIf="form.get('lat')?.errors?.required">
+          <div *ngIf="getControl('lat')?.errors?.required">
             Latitude is required.
           </div>
       </div>
@@ -46,11 +46,12 @@
         placeholder="Longitude..."
         class="form-control" />
 
-        <div *ngIf="form.get('lon')?.invalid && (form.get('lon')?.dirty || form.get('lon')?.touched)"
-          class="invalid-feedback">
-          <div *ngIf="form.get('lon')?.errors?.required">
+        <div *ngIf="hasError('lon')"
+             class="invalid-feedback">
+          <div *ngIf="getControl('lon')?.errors?.required">
             Longitude is required.
           </div>
+        </div>
     </div>
 
     <div class="form-group" *ngIf="countries">
@@ -65,9 +66,9 @@
         </mat-select>
       </mat-form-field>
 
-      <div *ngIf="form.get('countryId')?.invalid && (form.get('countryId')?.dirty || form.get('countryId')?.touched)"
-        class="invalid-feedback">
-        <div *ngIf="form.get('countryId')?.errors?.required">
+      <div *ngIf="hasError('countryId')"
+            class="invalid-feedback">
+        <div *ngIf="getControl('countryId')?.errors?.required">
           Please select a Country.
         </div>
       </div>

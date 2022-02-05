@@ -12,13 +12,12 @@
         placeholder="Country name..."
         class="form-control"
         />
-      <div *ngIf="form.get('name')?.invalid &&
-        (form.get('name')?.dirty || form.get('name')?.touched)"
+      <div *ngIf="hasError('name')"
         class="invalid-feedback">
-        <div *ngIf="form.get('name')?.errors?.required">
+        <div *ngIf="getControl('name')?.errors?.required">
           Name is required.
         </div>
-        <div *ngIf="form.get('name')?.errors?.isDupeField">
+        <div *ngIf="getControl('name')?.errors?.isDupeField">
           Name already exists: please choose another.
         </div>
       </div>
@@ -32,16 +31,15 @@
              placeholder="2 letters country code..."
              class="form-control" />
 
-      <div *ngIf="form.get('iso2')?.invalid &&
-        (form.get('iso2')?.dirty || form.get('iso2')?.touched)"
+      <div *ngIf="hasError('iso2')"
         class="invalid-feedback">
-        <div *ngIf="form.get('iso2')?.errors?.required">
+        <div *ngIf="getControl('iso2')?.errors?.required">
           ISO 3166-1 ALPHA-2 country code is required.
         </div>
-        <div *ngIf="form.get('iso2')?.errors?.pattern">
+        <div *ngIf="getControl('iso2')?.errors?.pattern">
           ISO 3166-1 ALPHA-2 country code requires 2 letters.
         </div>
-        <div *ngIf="form.get('iso2')?.errors?.isDupeField">
+        <div *ngIf="getControl('iso2')?.errors?.isDupeField">
           This ISO 3166-1 ALPHA-2 country code already exists:
             please choose another.
         </div>
@@ -58,16 +56,15 @@
              placeholder="3 letters country code..."
              class="form-control" />
 
-      <div *ngIf="form.get('iso3')?.invalid &&
-            (form.get('iso3')?.dirty || form.get('iso3')?.touched)"
+      <div *ngIf="hasError('iso3')"
             class="invalid-feedback">
-          <div *ngIf="form.get('iso3')?.errors?.required">
+          <div *ngIf="getControl('iso3')?.errors?.required">
             ISO 3166-1 ALPHA-3 country code is required.
           </div>
-          <div *ngIf="form.get('iso3')?.errors?.pattern">
+          <div *ngIf="getControl('iso3')?.errors?.pattern">
             ISO 3166-1 ALPHA-3 country code requires 3 letters.
           </div>
-          <div *ngIf="form.get('iso3')?.errors?.isDupeField">
+          <div *ngIf="getControl('iso3')?.errors?.isDupeField">
             This ISO 3166-1 ALPHA-3 country code already exists:
               please choose another.
           </div>

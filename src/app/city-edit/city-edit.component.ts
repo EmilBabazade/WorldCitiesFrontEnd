@@ -6,13 +6,14 @@ import { Observable } from "rxjs";
 import { City } from "../cities/city";
 import { Country } from "../countries/Country";
 import { map } from "rxjs/operators";
+import { BaseFormComponent } from "../base.form.component";
 
 @Component({
   selector: "app-city-edit",
   templateUrl: "./city-edit.component.html",
   styleUrls: ["./city-edit.component.css"]
 })
-export class CityEditComponent implements OnInit {
+export class CityEditComponent extends BaseFormComponent implements OnInit {
   title?: string;
   city?: City;
   form!: FormGroup;
@@ -28,7 +29,9 @@ export class CityEditComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -38,6 +41,10 @@ export class CityEditComponent implements OnInit {
       countryId: new FormControl("", Validators.required)
     }, null, this.isDupeCity());
     this.loadData();
+  }
+
+  onChange() {
+    console.log(this.getControl("countryId")?.errors?.required);
   }
 
   isDupeCity(): AsyncValidatorFn {
