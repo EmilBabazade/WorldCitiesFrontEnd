@@ -4,7 +4,7 @@
 
 <p *ngIf="hideTable"><em>Loading...</em></p>
 
-<div class="commands text-right" *ngIf="cities">
+<div class="commands text-right" *ngIf="!hideTable">
   <button type="submit"
     [routerLink]="['/city']"
     class="btn btn-success">

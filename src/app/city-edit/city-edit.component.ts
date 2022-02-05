@@ -25,9 +25,9 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
   countries: Country[] = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
+    private readonly http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
   ) {
     super();

@@ -1,13 +1,12 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { City } from "./city";
-import { HttpClient, HttpParams } from "@angular/common/http";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, SortDirection } from "@angular/material/sort";
 import { Subject } from "rxjs";
-import { identifierModuleUrl } from "@angular/compiler";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { query } from "@angular/animations";
+import { CityService } from "../services/city.service";
+import { ApiResult } from "../services/base.service";
 
 @Component({
   selector: "app-cities",
@@ -33,8 +32,7 @@ export class CitiesComponent implements OnInit {
   filterQuery: string | null = null;
 
   constructor(
-    private http: HttpClient,
-    @Inject("BASE_URL") private baseUrl: string
+    private readonly cityService: CityService
   ) { }
 
   ngOnInit(): void {
@@ -64,31 +62,42 @@ export class CitiesComponent implements OnInit {
   }
 
   getData(event: PageEvent) {
-    const url = this.baseUrl + "api/Cities";
-    let params = new HttpParams()
-      .set("pageIndex", event.pageIndex.toString())
-      .set("pageSize", event.pageSize.toString())
-      .set("sortColumn", this.sort ? this.sort.active : this.defaultSortColumn)
-      .set("sortOrder", this.sort ? this.sort.direction : this.defaultSortOrder);
+    const sortColumn = this.sort
+      ? this.sort.active
+      : this.defaultSortColumn;
 
-    if(this.filterQuery) {
-      params = params
-        .set("filterColumn", this.defaultFilterColumn)
-        .set("filterQuery", this.filterQuery);
-    }
+    const sortOrder = this.sort
+      ? this.sort.direction
+      : this.defaultSortOrder;
 
-    this.http.get<any>(url, {params})
-      .subscribe({
-        next: (result: any) => {
-          if(this.paginator) {
-            this.paginator.length = result.totalCount;
-            this.paginator.pageIndex = result.pageIndex;
-            this.paginator.pageSize = result.pageSize;
-          }
-          this.cities = new MatTableDataSource<City>(result.data);
-          this.hideTable = false;
-        },
-        error: (err: any) => console.error(err)
-      });
+    const filterColumn = this.filterQuery
+      ? this.defaultFilterColumn
+      : null;
+
+    const filterQuery = this.filterQuery
+      ? this.filterQuery
+      : null;
+
+    this.cityService.getData(
+      event.pageIndex,
+      event.pageSize,
+      sortColumn,
+      sortOrder,
+      filterColumn,
+      filterQuery
+    ).subscribe({
+      next: (result: ApiResult<City>) => {
+        if(this.paginator) {
+          this.paginator.length = result.totalCount;
+          this.paginator.pageIndex = result.pageIndex;
+          this.paginator.pageSize = result.pageSize;
+        } else {
+          throw "paginator does not exist!";
+        }
+        this.cities = new MatTableDataSource<City>(result.data);
+        this.hideTable = result.data.length === 0;
+      },
+      error: (err: unknown) => console.log(err)
+    });
   }
 }

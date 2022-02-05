@@ -28,10 +28,10 @@ export class CountryEditComponent extends BaseFormComponent implements OnInit {
   id?: number;
 
   constructor(
-    private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient,
+    private readonly fb: FormBuilder,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
+    private readonly http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
   ) {
     super();

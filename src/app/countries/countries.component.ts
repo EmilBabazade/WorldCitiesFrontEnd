@@ -31,8 +31,8 @@ export class CountriesComponent implements OnInit {
   filterQuery: string | null = null;
 
   constructor(
-    private http: HttpClient,
-    @Inject("BASE_URL") private baseUrl: string
+    private readonly http: HttpClient,
+    @Inject("BASE_URL") private readonly baseUrl: string
   ) { }
 
   ngOnInit(): void {
@@ -83,8 +83,7 @@ export class CountriesComponent implements OnInit {
             this.paginator.pageSize = result.pageSize;
           }
           this.countries = new MatTableDataSource<Country>(result.data);
-          console.log(this.countries);
-          this.hideTable = false;
+          this.hideTable = result.data.length === 0;
         },
         error: (err: any) => console.error(err)
       });
