@@ -13,7 +13,7 @@ import { Country } from "./Country";
   styleUrls: ["./countries.component.css"]
 })
 export class CountriesComponent implements OnInit {
-  public displayedColumns: string[] = ["id", "name", "iso2", "iso3"];
+  public displayedColumns: string[] = ["id", "name", "iso2", "iso3", "totalCities"];
   countries: MatTableDataSource<Country> = new MatTableDataSource();
   hideTable = true;
 
