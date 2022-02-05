@@ -13,8 +13,9 @@
 </div>
 
 <mat-form-field [hidden]="hideTable">
-  <mat-label>Filter by name (or part of it)...</mat-label>
-  <input matInput (keyup)="loadData($event.target)">
+  <input matInput
+    (keyup)="onFilterTextChanged($event.target)"
+    placeholder="Filter by name (or part of it)...">
 </mat-form-field>
 
 <table mat-table [dataSource]="cities" class="table-striped mat-elevation-z8" [hidden]="hideTable"

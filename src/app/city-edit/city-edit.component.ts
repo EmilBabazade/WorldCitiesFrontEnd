@@ -1,16 +1,16 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { City } from '../cities/city';
-import { Country } from '../countries/Country';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Component, Inject, OnInit } from "@angular/core";
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { City } from "../cities/city";
+import { Country } from "../countries/Country";
+import { map } from "rxjs/operators";
 
 @Component({
-  selector: 'app-city-edit',
-  templateUrl: './city-edit.component.html',
-  styleUrls: ['./city-edit.component.css']
+  selector: "app-city-edit",
+  templateUrl: "./city-edit.component.html",
+  styleUrls: ["./city-edit.component.css"]
 })
 export class CityEditComponent implements OnInit {
   title?: string;
@@ -27,15 +27,15 @@ export class CityEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string
+    @Inject("BASE_URL") private baseUrl: string
   ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      lat: new FormControl('', Validators.required),
-      lon: new FormControl('', Validators.required),
-      countryId: new FormControl('', Validators.required)
+      name: new FormControl("", Validators.required),
+      lat: new FormControl("", Validators.required),
+      lon: new FormControl("", Validators.required),
+      countryId: new FormControl("", Validators.required)
     }, null, this.isDupeCity());
     this.loadData();
   }
@@ -44,23 +44,23 @@ export class CityEditComponent implements OnInit {
     return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
       const city = <City>{
         id: this.id ? this.id : 0,
-        name: this.form.get('name')?.value,
-        lat: this.form.get('lat')?.value,
-        lon: this.form.get('lon')?.value,
-        countryId: this.form.get('countryId')?.value
+        name: this.form.get("name")?.value,
+        lat: this.form.get("lat")?.value,
+        lon: this.form.get("lon")?.value,
+        countryId: this.form.get("countryId")?.value
       };
 
-      const url = this.baseUrl + 'api/Cities/IsDupeCity';
+      const url = this.baseUrl + "api/Cities/IsDupeCity";
       return this.http.post<boolean>(url, city).pipe(
         map((result: any) => result ? {isDupeCity : true} : null)
       );
-    }
+    };
   }
 
   loadData() {
     this.loadCountries();
 
-    this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.id = Number(this.activatedRoute.snapshot.paramMap.get("id"));
     const url = `${this.baseUrl}api/Cities/${this.id}`;
     if(this.id) {
       // EDIT MODE
@@ -87,10 +87,10 @@ export class CityEditComponent implements OnInit {
     // fetch all the countries from the server
     const url = `${this.baseUrl}api/Countries`;
     const params = new HttpParams()
-      .set('pageIndex', '0')
-      .set('pageSize', '99999')
-      .set('sortColumn', 'name')
-      .set('sortOrder', 'asc');
+      .set("pageIndex", "0")
+      .set("pageSize", "99999")
+      .set("sortColumn", "name")
+      .set("sortOrder", "asc");
 
     this.http.get<any>(url, {params}).subscribe({
       next: (res: any) => {
@@ -103,17 +103,17 @@ export class CityEditComponent implements OnInit {
   onSubmit() {
     const city = this.id ? this.city : <City>{};
     if(!city) {
-      throw 'onSubmit(): city is undefined';
+      throw "onSubmit(): city is undefined";
     }
-    city.name = this.form.get('name')?.value;
-    city.lat = this.form.get('lat')?.value;
-    city.lon = this.form.get('lon')?.value;
-    city.countryId = this.form.get('countryId')?.value;
+    city.name = this.form.get("name")?.value;
+    city.lat = this.form.get("lat")?.value;
+    city.lon = this.form.get("lon")?.value;
+    city.countryId = this.form.get("countryId")?.value;
 
     if(this.id) {
       //EDIT MODE
       if(!this.city) {
-        throw 'onSubmit(): this.city is undefined';
+        throw "onSubmit(): this.city is undefined";
       }
       const url = `${this.baseUrl}api/Cities/${this.city.id}`;
       this.http
@@ -121,7 +121,7 @@ export class CityEditComponent implements OnInit {
         .subscribe({
           next: (result: any) => {
             console.log(`City ${city.id} has been updated.`);
-            this.router.navigate(['/cities']);
+            this.router.navigate(["/cities"]);
           },
           error: error => console.log(error)
         });
@@ -134,10 +134,10 @@ export class CityEditComponent implements OnInit {
           next: (result: City) => {
             console.log(`City ${result.id} has been created.`);
             // go back to cities view
-            this.router.navigate(['/cities']);
+            this.router.navigate(["/cities"]);
           },
           error: (err: any) => console.error(err)
-        })
+        });
     }
   }
 
